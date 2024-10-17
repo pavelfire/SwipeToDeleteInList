@@ -12,8 +12,11 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -26,6 +29,7 @@ fun ContactScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+    var revealedContactIndex by remember { mutableStateOf<Int?>(null) }
     val contacts = remember {
         mutableStateListOf(
             *(1..100).map {
@@ -48,7 +52,14 @@ fun ContactScreen(
             SwipeableItemWithActions(
                 isRevealed = contact.isOptionsRevealed,
                 onExpanded = {
+                    revealedContactIndex?.let { prevIndex ->
+                        if (prevIndex != index) {
+                            contacts[prevIndex] =
+                                contacts[prevIndex].copy(isOptionsRevealed = false)
+                        }
+                    }
                     contacts[index] = contact.copy(isOptionsRevealed = true)
+                    revealedContactIndex = index
                 },
                 onCollapsed = {
                     contacts[index] = contact.copy(isOptionsRevealed = false)
