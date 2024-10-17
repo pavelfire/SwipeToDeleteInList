@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -66,7 +67,7 @@ fun SwipeableItemWithActions(
         }
         Surface(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
 //              .graphicsLayer { translationX = offset.value } // same function like string below
                 .offset { IntOffset(offset.value.roundToInt(), 0) }
                 .pointerInput(key1 = contextMenuWidth) {
